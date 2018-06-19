@@ -28,7 +28,6 @@ BUILD_TARGET_DIR="`pwd`/target"
 
 echo Building : $APP_NAME
 
-#CGO_ENABLED=0 GOOS=linux go build -installsuffix cgo -a -o ${APP_NAME} kubeam/. && \
 export GOPATH=$BUILD_TARGET_DIR
 mkdir -p $GOPATH/src && \
 mkdir -p $GOPATH/bin && \
@@ -37,7 +36,6 @@ GOBIN=$GOPATH/bin && \
 ( [  -L  $GOPATH/src/kubeam ]  && rm $GOPATH/src/kubeam) 
 ( [  -L  $GOPATH/src/isakonf ]  && rm $GOPATH/src/isakonf) 
 
-curl -L -o kubectl.linux https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl
 
 CURR_DIR=`pwd`
 #for a in kubeam isakonf; do
@@ -65,6 +63,5 @@ for a in $APPLICATIONS; do
     fi
 
 done
-#-installsuffix cgo
 
 
