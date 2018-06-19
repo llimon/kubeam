@@ -5,7 +5,7 @@
 
 
 if [ "$1" == "" ]; then
-    APPLICATIONS="kubeam isakonf"
+    APPLICATIONS="kubeam isakonf sample-webapp"
 else
     APPLICATIONS=$*
 fi
