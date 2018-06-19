@@ -17,4 +17,5 @@ before_script:
 
 script:
 - kubectl cluster-info 
+# Bootstrap kubeam
 - kubectl --namespace kube-system get pods  
