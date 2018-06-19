@@ -47,4 +47,21 @@ script:
 - docker push localhost:5000/kubeam
 - kubectl apply -f ci-tests/kubeam-bootstrap.yaml
 - kubectl apply -f ci-tests/kubeam-bootstrap-service.yaml
-- kubectl get pods 
+- sleep 10
+- curl -k https://admin:123456@127.0.0.1/health-check | grep OK
+- docker push localhost:5000/sample-webapp:001
+- curl -v -k -X POST https://admin:123456@127.0.0.1/v1/create/sample-webapp/dev/main/001  | tee test2.log
+- sleep 2
+- cat test2.log |grep -i "namespace dev-sample-webapp created"
+- cat test2.log |grep -i "deployment sample-webapp-deployment created"
+- cat test2.log |grep -i "service dev-sample-webapp-service created"
+- sleep 10
+- kubectl --namespace  dev-sample-webapp get pods
+- curl -v http://127.0.0.1:8080/
+- docker push localhost:5000/sample-webapp:002
+- curl -v -k -X POST https://admin:123456@127.0.0.1/v1/deploy/sample-webapp/dev/main/002 | tee test3.log
+- sleep 10
+- cat test3.log | grep -i "deployment sample-webapp-deployment replaced"
+- sleep 60
+- kubectl --namespace  dev-sample-webapp get pods
+- curl -v http://127.0.0.1:8080/
