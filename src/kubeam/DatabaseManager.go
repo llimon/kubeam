@@ -2,27 +2,28 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
-/*GetDatabaseConnection opens, test and returns a new database connection*/
+/*GetDatabaseConnection opens and pings a new database connection for test*/
 func GetDatabaseConnection() *sql.DB {
-	var err error
-	var db *sql.DB
-
-	databaseIP, err := config.GetString("database/host", "localhost")
+	databaseIP, err := config.GetString("database/host", "mariadb")
 	databasePort, err := config.GetInt("database/port", 3306)
 	databasePassword, err := config.GetString("database/password", "")
 	databaseType, err := config.GetString("database/type", "mysql")
 	databaseName, err := config.GetString("database/name", "kubeam")
-	databaseUser, err := config.GetString("database/user", "sample-user")
-	databaseConn := databaseUser + databasePassword +
-		"@tcp(" + databaseIP + ":" + databasePort + ")/" + databaseName
+	databaseUser, err := config.GetString("database/user", "root")
 
-	if db, err = sql.Open(databaseType, databaseConn); err == nil {
-		if err = db.Ping(); err == nil {
-			return db
-		}
-	}
-	LogError.Println(err.Error())
-	return nil
+	databaseConn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", databaseUser,
+		databasePassword, databaseIP, databasePort, databaseName)
+
+	db, err := sql.Open(databaseType, databaseConn)
+	ErrorHandler(err)
+
+	err = db.Ping()
+	ErrorHandler(err)
+
+	return db
 }
