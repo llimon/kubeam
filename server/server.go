@@ -65,6 +65,7 @@ func LowerCaseURI(h http.Handler) http.Handler {
 	return http.HandlerFunc(fn)
 }
 
+// StartServer : Starts Kubeam Server
 func StartServer() {
 
 	// Init Loggers:

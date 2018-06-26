@@ -3,8 +3,7 @@ package server
 import (
 	"database/sql"
 	"fmt"
-
-	_ "github.com/go-sql-driver/mysql"
+	//"github.com/go-sql-driver/mysql"
 )
 
 /*GetDatabaseConnection opens and pings a new database connection for test*/

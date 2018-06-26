@@ -11,3 +11,5 @@ kubectl.linux
 target/**
 src/kubeam/kubeam
 src/sample-webapp/sample-webapp
+kubeam
+kubectl
