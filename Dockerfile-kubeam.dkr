@@ -6,7 +6,7 @@ COPY config-sample.yaml /
 COPY authz-policy.csv /
 COPY authz-model.conf /
 COPY server.crt server.key /
-COPY kubeam /
+COPY bin/kubeam /
 ADD applications /applications
 ADD clusters /clusters
 ADD lookup /lookup
