@@ -1,12 +1,12 @@
 FROM busybox
 
-COPY kubectl.linux /kubectl
+COPY kubectl /kubectl
 RUN chmod 755 /kubectl
 COPY config-sample.yaml /
 COPY authz-policy.csv /
 COPY authz-model.conf /
 COPY server.crt server.key /
-COPY src/kubeam/kubeam /
+COPY kubeam /
 ADD applications /applications
 ADD clusters /clusters
 ADD lookup /lookup

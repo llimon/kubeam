@@ -1,15 +1,14 @@
-package main
+package server
 
 import (
 	"crypto/tls"
+	"github.com/creamdog/gonfig"
+	"github.com/gorilla/mux"
 	"io"
 	"log"
 	"net/http"
 	"os"
 	"strings"
-
-	"github.com/creamdog/gonfig"
-	"github.com/gorilla/mux"
 )
 
 var config gonfig.Gonfig
@@ -66,7 +65,7 @@ func LowerCaseURI(h http.Handler) http.Handler {
 	return http.HandlerFunc(fn)
 }
 
-func main() {
+func StartServer() {
 
 	// Init Loggers:
 	// File descriptors in order: Trace, Debug, Info, Warning, Error
