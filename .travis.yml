@@ -17,6 +17,7 @@ env:
 - CHANGE_MINIKUBE_NONE_USER=true
 
 install:
+  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
   - make
 
 before_script:
