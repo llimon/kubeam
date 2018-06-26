@@ -28,7 +28,7 @@ before_script:
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 
 script:
-- bash build.sh kubeam
+#- bash build.sh kubeam
 - curl -L -o kubectl.linux https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl
 - docker build . -f Dockerfile-kubeam.dkr -t localhost:5000/kubeam:latest
 - kubectl cluster-info 
