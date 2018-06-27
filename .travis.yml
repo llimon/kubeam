@@ -16,6 +16,10 @@ services:
 env:
 - CHANGE_MINIKUBE_NONE_USER=true
 
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install curl libcurl
+
 install:
   - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
   - make
@@ -54,6 +58,7 @@ script:
 - sleep 10
 - curl -k https://admin:123456@localhost/health-check | grep OK
 - curl -k https://admin:123456@127.0.0.1/health-check | grep OK
+- curl -k --ciphers RC4 https://admin:123456@127.0.0.1/health-check | grep OK
 - docker push localhost:5000/sample-webapp:001
 - curl -v -k -X POST https://admin:123456@127.0.0.1/v1/create/sample-webapp/dev/main/001  | tee test2.log
 - sleep 2
