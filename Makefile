@@ -105,13 +105,13 @@ fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
 # Dependency management
 
 Gopkg.lock: Gopkg.toml | $(BASE) ; $(info $(M) updating dependencies…)
-	$Q cd $(BASE) && $(DEP) ensure
+	$Q cd $(BASE) && $(DEP) ensure -update
 	@touch $@
 # glide.lock: glide.yaml | $(BASE) ; $(info $(M) updating dependencies…)
 # 	$Q cd $(BASE) && $(DEP) update
 # 	@touch $@
 vendor: Gopkg.lock | $(BASE) ; $(info $(M) retrieving dependencies…)
-	$Q cd $(BASE) && $(DEP) 
+	$Q cd $(BASE) && $(DEP) ensure
 	@ln -nsf . vendor/src
 	@touch $@
 
