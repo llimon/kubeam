@@ -22,7 +22,7 @@ all: fmt lint vendor cert | $(BASE) ; $(info $(M) building executable…) @ ## B
 	$Q cd $(BASE) && $(GO) build \
 		-tags release \
 		-ldflags '-X $(PACKAGE)/cmd.Version=$(VERSION) -X $(PACKAGE)/cmd.BuildDate=$(DATE)' \
-		-o bin/$(PACKAGE) main.go
+		-a -o bin/$(PACKAGE) main.go
 
 $(BASE): ; $(info $(M) setting GOPATH…)
 	@mkdir -vp $(dir $@)
@@ -112,7 +112,6 @@ cert: ; $(info $(M) Creating self signed cert...) @ ## Run openssl
 .PHONY: package 
 package: ; $(info $(M) Creating creating docker image...) @ ## Run openssl
 	@ret=0 && \
-        cp -vf config-sample.yaml config.yaml && \
         docker build . -f Dockerfile-kubeam.dkr -t localhost:5000/kubeam:latest ; \
         exit $$ret
 

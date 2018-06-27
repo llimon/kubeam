@@ -2,7 +2,7 @@ FROM busybox
 
 COPY kubectl /kubectl
 RUN chmod 755 /kubectl
-COPY config-sample.yaml /
+COPY config-sample.yaml /config.yaml
 COPY authz-policy.csv /
 COPY authz-model.conf /
 COPY server.crt server.key /
