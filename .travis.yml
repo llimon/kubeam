@@ -18,7 +18,7 @@ env:
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get install curl libcurl
+  - sudo apt-get install -y curl libcurl
 
 install:
   - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
