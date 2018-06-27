@@ -109,6 +109,13 @@ cert: ; $(info $(M) Creating self signed cert...) @ ## Run openssl
         -keyout server.key  -out server.crt  || ret=$$?; \
         exit $$ret
 
+.PHONY: package 
+package: ; $(info $(M) Creating creating docker image...) @ ## Run openssl
+	@ret=0 && \
+        cp -vf config-sample.yaml config.yaml && \
+        docker build . -f Dockerfile-kubeam.dkr -t localhost:5000/kubeam:latest ; \
+        exit $$ret
+
 # Dependency management
 
 Gopkg.lock: Gopkg.toml | $(BASE) ; $(info $(M) updating dependencies…)
