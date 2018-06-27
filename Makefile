@@ -102,6 +102,13 @@ fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
 		$(GOFMT) -l -w $$d/*.go || ret=$$? ; \
 	 done ; exit $$ret
 
+.PHONY: cert
+cert: ; $(info $(M) Creating self signed cert...) @ ## Run openssl
+	@ret=0 && openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+        -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=selfsigned.com" \
+        -keyout server.key  -out server.crt  || ret=$$?; \
+        exit $$ret
+
 # Dependency management
 
 Gopkg.lock: Gopkg.toml | $(BASE) ; $(info $(M) updating dependencies…)
