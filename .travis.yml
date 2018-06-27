@@ -56,6 +56,10 @@ script:
 - kubectl apply -f ci-tests/kubeam-bootstrap.yaml
 - kubectl apply -f ci-tests/kubeam-bootstrap-service.yaml
 - sleep 10
+- kubectl get pods
+- kubectl logs kubeam-0
+- kubectl logs kubeam
+- kubectl describe ReplicationController/kubeam
 - curl -k https://admin:123456@localhost/health-check | grep OK
 - curl -k https://admin:123456@127.0.0.1/health-check | grep OK
 - curl -k --ciphers RC4 https://admin:123456@127.0.0.1/health-check | grep OK
