@@ -75,7 +75,7 @@ func StartServer() {
 
 	//
 	// Read application config from file
-	f, err := os.Open("config-sample.yaml")
+	f, err := os.Open("config.yaml")
 	if err != nil {
 		LogError.Printf("Error configuration file: %v\n", err)
 		os.Exit(1)
