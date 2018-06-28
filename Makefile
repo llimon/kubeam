@@ -18,7 +18,7 @@ Q = $(if $(filter 1,$V),,@)
 M = $(shell printf "\033[34;1m▶\033[0m")
 
 .PHONY: all
-all: fmt lint vendor cert | $(BASE) ; $(info $(M) building executable…) @ ## Build program binary
+all: fmt lint vendor | $(BASE) ; $(info $(M) building executable…) @ ## Build program binary
 	$Q cd $(BASE) && GOOS=linux $(GO) build \
 		-tags release \
 		-ldflags '-X $(PACKAGE)/cmd.Version=$(VERSION) -X $(PACKAGE)/cmd.BuildDate=$(DATE)' \
@@ -110,7 +110,7 @@ cert: ; $(info $(M) Creating self signed cert...) @ ## Run openssl
         exit $$ret
 
 .PHONY: package 
-package: ; $(info $(M) Creating creating docker image...) @ ## Run openssl
+package: cert ; $(info $(M) Creating creating docker image...) @ ## Run openssl
 	@ret=0 && \
         docker build . -f Dockerfile-kubeam.dkr -t localhost:5000/kubeam:latest || ret=$$?; \
         exit $$ret

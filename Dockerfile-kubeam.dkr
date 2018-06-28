@@ -12,5 +12,6 @@ ADD clusters /clusters
 ADD lookup /lookup
 
 EXPOSE 443 8081
-ENTRYPOINT ["/kubeam"]
-CMD ["start"]
+#ENTRYPOINT ["/kubeam"]
+#CMD ["start"]
+CMD ["/kubeam", "start" ]
