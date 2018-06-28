@@ -46,6 +46,7 @@ script:
 - kubectl apply -f ci-tests/minikube-resitry.yaml
 - sleep 20
 - eval $(minikube docker-env)
+- DOCKENV="$(minikube docker-env)" && eval "$DOCKENV"
 - make package
 - echo $DOCKER_HOST
 - echo $DOCKER_CERT_PATH
