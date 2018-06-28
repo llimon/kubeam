@@ -112,7 +112,7 @@ cert: ; $(info $(M) Creating self signed cert...) @ ## Run openssl
 .PHONY: package 
 package: ; $(info $(M) Creating creating docker image...) @ ## Run openssl
 	@ret=0 && \
-        docker build . -f Dockerfile-kubeam.dkr -t localhost:5000/kubeam:latest ; \
+        docker build . -f Dockerfile-kubeam.dkr -t localhost:5000/kubeam:latest || ret=$$?; \
         exit $$ret
 
 # Dependency management
