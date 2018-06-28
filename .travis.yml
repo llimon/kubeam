@@ -51,9 +51,10 @@ script:
 - echo $DOCKER_HOST
 - echo $DOCKER_CERT_PATH
 - docker push localhost:5000/kubeam
-- docker run -d localhost:5000/kubeam
+- docker run --name kubeam-run -d localhost:5000/kubeam
 - sleep 10
 - docker ps -a
+- docker logs kubeam-run
 - kubectl get pods  
 - bash build.sh sample-webapp
 - docker build . -f Dockerfile-sample-webapp -t localhost:5000/sample-webapp:001
