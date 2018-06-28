@@ -1,4 +1,4 @@
-FROM busybox
+FROM alpine
 
 COPY kubectl /kubectl
 RUN chmod 755 /kubectl
