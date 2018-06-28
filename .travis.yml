@@ -36,20 +36,14 @@ before_script:
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 
 script:
-#- bash build.sh kubeam
-#- curl -L -o kubectl https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl
-#- docker build . -f Dockerfile-kubeam.dkr -t localhost:5000/kubeam:latest
 - kubectl cluster-info 
 # Bootstrap kubeam
 - kubectl --namespace kube-system get pods  
 - kubectl config set-context  minikube --namespace default
 - kubectl apply -f ci-tests/minikube-resitry.yaml
 - sleep 20
-#- minikube docker-env
-#- eval "$(minikube docker-env)"
 - make package
 - docker push localhost:5000/kubeam
-#- docker run --name kubeam-run -d localhost:5000/kubeam
 - sleep 10
 - kubectl get pods  
 - bash build.sh sample-webapp
@@ -69,18 +63,20 @@ script:
 - curl -k https://admin:123456@127.0.0.1/health-check | grep OK
 - curl -k --ciphers RC4 https://admin:123456@127.0.0.1/health-check | grep OK
 - docker push localhost:5000/sample-webapp:001
-- curl -v -k -X POST https://admin:123456@127.0.0.1/v1/create/sample-webapp/dev/main/001  | tee test2.log
+- curl -k -X POST https://admin:123456@127.0.0.1/v1/create/sample-webapp/dev/main/001  | tee test2.log
 - sleep 2
 - cat test2.log |grep -i "namespace dev-sample-webapp created"
 - cat test2.log |grep -i "deployment sample-webapp-deployment created"
 - cat test2.log |grep -i "service dev-sample-webapp-service created"
 - sleep 10
 - kubectl --namespace  dev-sample-webapp get pods
-- curl -v http://127.0.0.1:8080/
+- curl -v http://127.0.0.1:8080/ | tee test-app-1.log
+- cat test-app-1.log | grep -i "Hello, you've requested"
 - docker push localhost:5000/sample-webapp:002
-- curl -v -k -X POST https://admin:123456@127.0.0.1/v1/deploy/sample-webapp/dev/main/002 | tee test3.log
+- curl -k -X POST https://admin:123456@127.0.0.1/v1/deploy/sample-webapp/dev/main/002 | tee test3.log
 - sleep 10
 - cat test3.log | grep -i "deployment sample-webapp-deployment replaced"
-- sleep 60
+- sleep 10
 - kubectl --namespace  dev-sample-webapp get pods
-- curl -v http://127.0.0.1:8080/
+- curl -v http://127.0.0.1:8080/ | tee test-app-2.log
+- cat test-app-2.log | grep -i "Hello, you've redeployed"
