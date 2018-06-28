@@ -112,6 +112,8 @@ cert: ; $(info $(M) Creating self signed cert...) @ ## Run openssl
 .PHONY: package 
 package: cert ; $(info $(M) Creating creating docker image...) @ ## Run openssl
 	@ret=0 && \
+	curl -L -o kubectl https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl && \
+	chmod 755 kubectl && \
         docker build . -f Dockerfile-kubeam.dkr -t localhost:5000/kubeam:latest || ret=$$?; \
         exit $$ret
 

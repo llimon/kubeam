@@ -38,8 +38,8 @@ before_script:
 
 script:
 #- bash build.sh kubeam
-- curl -L -o kubectl https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl
-- docker build . -f Dockerfile-kubeam.dkr -t localhost:5000/kubeam:latest
+#- curl -L -o kubectl https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl
+#- docker build . -f Dockerfile-kubeam.dkr -t localhost:5000/kubeam:latest
 - kubectl cluster-info 
 # Bootstrap kubeam
 - kubectl --namespace kube-system get pods  
