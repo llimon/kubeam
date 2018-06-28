@@ -19,7 +19,7 @@ M = $(shell printf "\033[34;1m▶\033[0m")
 
 .PHONY: all
 all: fmt lint vendor | $(BASE) ; $(info $(M) building executable…) @ ## Build program binary
-	$Q cd $(BASE) && GOOS=linux $(GO) build \
+	$Q cd $(BASE) && CGO_ENABLED=0 GOOS=linux $(GO) build \
 		-tags release \
 		-ldflags '-X $(PACKAGE)/cmd.Version=$(VERSION) -X $(PACKAGE)/cmd.BuildDate=$(DATE)' \
 		-a -o bin/$(PACKAGE) main.go
