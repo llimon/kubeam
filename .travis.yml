@@ -23,7 +23,6 @@ before_install:
 install:
   - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
   - make
-  - make package
 
 before_script:
 # Download kubectl, which is a requirement for using minikube.
@@ -46,6 +45,11 @@ script:
 - kubectl config set-context  minikube --namespace default
 - kubectl apply -f ci-tests/minikube-resitry.yaml
 - sleep 20
+- source demo/set-registry.sh
+- make package
+- echo $DOCKER_HOST
+- echo $DOCKER_CERT_PATH
+- docker push localhost:5000/kubeam
 - kubectl get pods  
 - bash build.sh sample-webapp
 - docker build . -f Dockerfile-sample-webapp -t localhost:5000/sample-webapp:001
