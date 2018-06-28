@@ -45,7 +45,7 @@ script:
 - kubectl config set-context  minikube --namespace default
 - kubectl apply -f ci-tests/minikube-resitry.yaml
 - sleep 20
-- source demo/set-registry.sh
+- eval $(minikube docker-env)
 - make package
 - echo $DOCKER_HOST
 - echo $DOCKER_CERT_PATH
