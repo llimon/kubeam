@@ -23,6 +23,7 @@ before_install:
 install:
   - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
   - make
+  - make package
 
 before_script:
 # Download kubectl, which is a requirement for using minikube.
