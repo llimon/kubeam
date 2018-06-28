@@ -45,6 +45,7 @@ script:
 - kubectl config set-context  minikube --namespace default
 - kubectl apply -f ci-tests/minikube-resitry.yaml
 - sleep 20
+- minikube docker-env
 - eval "$(minikube docker-env)"
 #- DOCKENV="$(minikube docker-env)" && eval "$DOCKENV"
 - make package
